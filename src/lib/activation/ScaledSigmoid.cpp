@@ -1,5 +1,5 @@
-#include <activation/ScaledSigmoid.h>
 #include <cmath>
+#include <activation/ScaledSigmoid.h>
 namespace dnn{
 ScaledSigmoid::ScaledSigmoid(double min,double max):min(min),max(max){
 
@@ -14,5 +14,8 @@ double ScaledSigmoid::activationBackwards(double x){
 std::string ScaledSigmoid::getName() const{
     return "scaled_sigmoid";
 }
+double ScaledSigmoid::getMin() const { return min; }
+double ScaledSigmoid::getMax() const { return max; }
 }
+
 

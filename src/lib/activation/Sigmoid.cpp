@@ -1,5 +1,5 @@
-#include <activation/Sigmoid.h>
 #include <cmath>
+#include <activation/Sigmoid.h>
 
 namespace dnn {
 
