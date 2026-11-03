@@ -4,5 +4,16 @@
 
 #include <string>
 
-class Sigmoid {
+namespace dnn {
+
+class Sigmoid: public ActivationFunction {
+public:
+    virtual ~Sigmoid()=default;
+    Sigmoid();
+
+    virtual double activation(double x);
+    virtual double activationBackwards(double x);
+    virtual std::string getName() const;
 };
+
+}

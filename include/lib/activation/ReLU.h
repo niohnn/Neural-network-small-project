@@ -4,7 +4,16 @@
 
 #include <string>
 
+namespace dnn {
 
-class ReLU {
+class ReLU: public ActivationFunction {
+public:
+    virtual ~ReLU()=default;
+    ReLU();
+
+    virtual double activation(double x);
+    virtual double activationBackwards(double x);
+    virtual std::string getName() const;
 };
 
+}

@@ -1,0 +1,2 @@
+
+Davide Wiest: Visual Studio Code C++ extension pack IDE features (single word autocomplete)
