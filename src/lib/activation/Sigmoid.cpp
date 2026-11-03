@@ -1,19 +1,20 @@
 #include <cmath>
 #include <activation/Sigmoid.h>
+#include <cmath>
 
+namespace dnn {
 
-dnn::Sigmoid::Sigmoid() {}
-
-double dnn::Sigmoid::activation(double x) {
+double Sigmoid::activation(double x) {
     return 1.0 / (1.0 + std::exp(-x));
 }
 
-double dnn::Sigmoid::activationBackwards(double x) {
-    const double act = activation(x);
-    return act * (1-act);
+double Sigmoid::activationBackwards(double x) {
+    double s = activation(x);
+    return s * (1.0 - s);
 }
 
-std::string dnn::Sigmoid::getName() const {
+std::string Sigmoid::getName() const {
     return "sigmoid";
 }
 
+}

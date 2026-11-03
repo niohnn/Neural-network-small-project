@@ -6,14 +6,15 @@
 
 namespace dnn {
 
-class ReLU: public ActivationFunction {
-public:
-    virtual ~ReLU()=default;
-    ReLU();
 
-    virtual double activation(double x);
-    virtual double activationBackwards(double x);
-    virtual std::string getName() const;
+class ReLU : public ActivationFunction {
+    public :
+    ReLU()= default;
+    ~ReLU () override = default;
+
+    double activation (double x) override ;
+    double activationBackwards(double x ) override ;
+    std::string getName() const override;
 };
 
 }
