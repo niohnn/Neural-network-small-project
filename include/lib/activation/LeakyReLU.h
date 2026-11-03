@@ -16,4 +16,4 @@ class LeakyReLU : public ActivationFunction{
 };
 }
 
-}
+
