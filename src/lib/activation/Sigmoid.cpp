@@ -1,6 +1,5 @@
 #include <cmath>
 #include <activation/Sigmoid.h>
-#include <cmath>
 
 namespace dnn {
 
