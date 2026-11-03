@@ -4,7 +4,15 @@
 
 #include <string>
 
+namespace dnn {
+class LeakyReLU : public ActivationFunction{
+    public :
+       LeakyReLU()=default;
+       ~LeakyReLU()=default;
 
-class LeakyReLU {
+       double activation(double x) override ;
+       double activationBackwards (double x ) override ;
+       std::string getName() const override ;
 };
+}
 
