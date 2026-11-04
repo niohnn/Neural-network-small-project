@@ -49,7 +49,7 @@ void Network::fullForwardPropagation(const std::vector<double>& input) {
 void Network::fullBackwardPropagation(const std::vector<double>& predictedOutput, const std::vector<double>& actualOutput) {
     std::vector<double> dACurr = ownedLossFunction->getGradient(predictedOutput, actualOutput);
 
-    for (int i=layers.size();i>=0;i--) {
+    for (int i=layers.size()-1;i>=0;i--) {
         layers[i]->backwardPropagation(dACurr, getLayerInput(i));
         dACurr = layers[i]->getDPreviousLayerOutput();
     }
@@ -57,14 +57,14 @@ void Network::fullBackwardPropagation(const std::vector<double>& predictedOutput
 
 void Network::trainBatch(const std::vector<std::vector<double>>& inputs, const std::vector<std::vector<double>>& actualOutputs, std::size_t batchSize,
 int epochs, double learningRate) {
-    if (ownedLossFunction == NULL) throw new std::invalid_argument("Loss function must be registered before trainBatch can be called.");
+    if (ownedLossFunction == NULL) throw std::invalid_argument("Loss function must be registered before trainBatch can be called.");
     if (!(inputs.size()==actualOutputs.size() && inputs.size()==batchSize && batchSize >0)) 
-        throw new std::invalid_argument("First dimension of inputs and actual outputs must match batch size, and batch size must be >0: Inputs first dimension = " + std::to_string(inputs.size()) 
+        throw std::invalid_argument("First dimension of inputs and actual outputs must match batch size, and batch size must be >0: Inputs first dimension = " + std::to_string(inputs.size()) 
         + ". Outputs first dimension = " + std::to_string(actualOutputs.size()) + ". Batch size" + std::to_string(batchSize));
     if (inputs[0].size() != layers[0]->getWeights()[0].size())
-        throw new std::invalid_argument("Input dimension doesn't match first layer's dimension");
+        throw std::invalid_argument("Input dimension doesn't match first layer's dimension");
     if (inputs[0].size() != layers[layers.size()-1]->getWeights().size())
-        throw new std::invalid_argument("Output dimension doesn't match last layer's dimension");
+        throw std::invalid_argument("Output dimension doesn't match last layer's dimension");
    
     costHistory.clear();
     accuracyHistory.clear();
@@ -89,14 +89,14 @@ int epochs, double learningRate) {
 }
 
 double Network::computeAccuracy(const std::vector<std::vector<double>>& inputs, const std::vector<std::vector<double>>& actualOutputs) {
-    if (ownedLossFunction == NULL) throw new std::invalid_argument("Loss function must be registered before trainBatch can be called.");
+    if (ownedLossFunction == NULL) throw std::invalid_argument("Loss function must be registered before trainBatch can be called.");
     if (!(inputs.size()==actualOutputs.size() && inputs.size() >0)) 
-        throw new std::invalid_argument("First dimension of inputs and actual outputs must match and be >0: Inputs first dimension = " + std::to_string(inputs.size()) 
+        throw std::invalid_argument("First dimension of inputs and actual outputs must match and be >0: Inputs first dimension = " + std::to_string(inputs.size()) 
         + ". Outputs first dimension = " + std::to_string(actualOutputs.size()));
     if (inputs[0].size() != layers[0]->getWeights()[0].size())
-        throw new std::invalid_argument("Input dimension doesn't match first layer's dimension");
+        throw std::invalid_argument("Input dimension doesn't match first layer's dimension");
     if (inputs[0].size() != layers[layers.size()-1]->getWeights().size())
-        throw new std::invalid_argument("Output dimension doesn't match last layer's dimension");
+        throw std::invalid_argument("Output dimension doesn't match last layer's dimension");
 
     double accuracy = 0;
     for (int i=0;i<inputs.size();i++) {

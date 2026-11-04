@@ -51,7 +51,7 @@ void Layer::forwardPropagation(const std::vector<double>& previousLayerOutput) {
     std::vector<double> activationOutput(layerOutputSize, 0.0);
     const std::vector<std::vector<double>>& weights = getWeights();
     const std::vector<double>& bias = getBias();
-    for (int i=0; i<layerInputSize;i++) {
+    for (int i=0; i<layerOutputSize;i++) {
         preActivationOutput[i] = dotProduct(weights[i], previousLayerOutput) + bias[i];
         activationOutput[i] = activationFunction->activation(preActivationOutput[i]);
     }
@@ -92,10 +92,10 @@ void Layer::updateParameters(const std::vector<std::vector<double>>& dWeights, c
 
 void Layer::commitToWeights(double learningRate) {
     for (int i=0; i<weights.size(); i++) {
-        dWeights[i] = vecScalarMul(dWeights[i], 1/(double)numProcessedSamples);
+        accumulatedDWeights[i] = vecScalarMul(accumulatedDWeights[i], 1/(double)numProcessedSamples);
     }
-    dBias = vecScalarMul(dBias, 1/numProcessedSamples);
-    updateParameters(dWeights, dBias, learningRate);
+    accumulatedDBias = vecScalarMul(accumulatedDBias, 1/(double)numProcessedSamples);
+    updateParameters(accumulatedDWeights, accumulatedDBias, learningRate);
 
     for (int i=0; i<layerOutputSize; i++) {
         for (int j=0; j<layerInputSize; j++) {
