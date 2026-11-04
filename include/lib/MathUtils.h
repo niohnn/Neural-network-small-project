@@ -4,24 +4,11 @@
 #include <algorithm>
 namespace dnn {
 
-double dotProduct(const std::vector<double>& a, const std::vector<double>& b){
-    double result = 0.0 ;
-    for (std::size_t i = 0; i < a.size(); i++)
-    {
-        result += a[i]*b[i];
-    }
-    return result;
-    
-}
+double dotProduct(const std::vector<double>& a, const std::vector<double>& b);
 
-double sum(const std::vector<double>& values){
-    double result = 0.0;
-    for(double value: values){
-        
-       result+=value;
-    }
-    return result ;
-}
+double sum(const std::vector<double>& values);
+
+
 
 // Encodes value as a one-hot vector of numClasses elements: the element at index value is 1.0
 // and every other element is 0.0. Throws std::out_of_range if value is negative or >= numClasses.
