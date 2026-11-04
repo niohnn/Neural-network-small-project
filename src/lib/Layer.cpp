@@ -46,6 +46,18 @@ void Layer::setParameters(std::vector<std::vector<double>> weights, std::vector<
     this->bias = std::move(bias);
 }
 
+void Layer::forwardPropagation(const std::vector<double>& previousLayerOutput) {
+    std::vector<double> preActivationOutput(layerOutputSize, 0.0);
+    std::vector<double> activationOutput(layerOutputSize, 0.0);
+    const std::vector<std::vector<double>>& weights = getWeights();
+    const std::vector<double>& bias = getBias();
+    for (int i=0; i<layerInputSize;i++) {
+        preActivationOutput[i] = dotProduct(weights[i], previousLayerOutput) + bias[i];
+        activationOutput[i] = activationFunction->activation(preActivationOutput[i]);
+    }
+}
+
+
 uint64_t Layer::getId() const {
     return id;
 }
