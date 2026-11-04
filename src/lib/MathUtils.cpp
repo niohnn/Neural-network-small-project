@@ -35,9 +35,9 @@ std::vector<double> encodeAsOneHot(double value, std::size_t numClasses) {
     return encoded;
 }
 
-std::vector<double> vecAdd(std::vector<double>& a, std::vector<double>& b) {
+std::vector<double> vecAdd(const std::vector<double>& a, const std::vector<double>& b) {
     if (a.size() != b.size()) {
-        throw std::exception("Vectors need to have same dimensions");
+        throw std::invalid_argument("Vectors need to have same dimensions");
     }
     std::vector<double> c(a);
     for (int i=0;i<a.size(); i++) {
@@ -46,7 +46,7 @@ std::vector<double> vecAdd(std::vector<double>& a, std::vector<double>& b) {
     return c;
 } 
 
-std::vector<double> getMatrixColumn(std::vector<std::vector<double>>& matrix, size_t columnIndex) {
+std::vector<double> getMatrixColumn(const std::vector<std::vector<double>>& matrix, const size_t columnIndex) {
     if (matrix.size() == 0) {
         std::vector<double> emptyVec(0, 0.0);
         return emptyVec;
@@ -54,13 +54,13 @@ std::vector<double> getMatrixColumn(std::vector<std::vector<double>>& matrix, si
     size_t dim = matrix[0].size();
     std::vector<double> column(dim, 0.0);
     for (int i=0; i<matrix.size(); i++) {
-        if (matrix[i].size() != dim) throw std::exception("Inconsistent shape");
+        if (matrix[i].size() != dim) throw std::invalid_argument("Inconsistent shape");
         column[i] = matrix[i][columnIndex];
     }
     return column;
 }
 
-std::vector<double> vecScalarMul(std::vector<double> a, double b) {
+std::vector<double> vecScalarMul(const std::vector<double> a, const double b) {
     std::vector c(a);
     for (int i=0;i<a.size();i++) {
         c[i] *= b;

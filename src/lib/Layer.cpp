@@ -83,14 +83,16 @@ void Layer::backwardPropagation(const std::vector<double>& dActivationOutput, co
 
 void Layer::updateParameters(const std::vector<std::vector<double>>& dWeights, const std::vector<double>& dBias, double learningRate) {
     for (int i=0; i<weights.size(); i++) {
-        weights[i] = vecAdd(weights[i], vecScalarMul(dWeights[i], -learningRate));
+        std::vector<double> difference = vecScalarMul(dWeights[i], -learningRate);
+        weights[i] = vecAdd(weights[i], difference);
     }
-    bias = vecAdd(bias, vecScalarMul(dBias, -learningRate));
+    std::vector<double> difference = vecScalarMul(dBias, -learningRate);
+    bias = vecAdd(bias, difference);
 }
 
 void Layer::commitToWeights(double learningRate) {
     for (int i=0; i<weights.size(); i++) {
-        dWeights[i] = vecScalarMul(dWeights[i], 1/numProcessedSamples);
+        dWeights[i] = vecScalarMul(dWeights[i], 1/(double)numProcessedSamples);
     }
     dBias = vecScalarMul(dBias, 1/numProcessedSamples);
     updateParameters(dWeights, dBias, learningRate);

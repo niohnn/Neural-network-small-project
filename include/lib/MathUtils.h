@@ -33,6 +33,10 @@ std::vector<double>normalize(const std::vector<T>& values,int maxValue){
     } //same idea as the for loop previously 
     return result ;
 }
+
+std::vector<double> vecAdd(const std::vector<double>& a, const std::vector<double>& b);
+std::vector<double> getMatrixColumn(const std::vector<std::vector<double>>& matrix, const size_t columnIndex);
+std::vector<double> vecScalarMul(const std::vector<double> a, const double b);
                              
 
 }
