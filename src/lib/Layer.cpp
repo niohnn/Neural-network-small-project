@@ -57,6 +57,52 @@ void Layer::forwardPropagation(const std::vector<double>& previousLayerOutput) {
     }
 }
 
+void Layer::backwardPropagation(const std::vector<double>& dActivationOutput, const std::vector<double>& previousLayerOutput) {
+    std::vector<double> dPreActivation(layerOutputSize, 0.0);
+    for (int i=0; i<layerOutputSize;i++) {
+        dPreActivation[i] = dActivationOutput[i] * activationFunction->activationBackwards(preActivationOutput[i]);
+    }
+    std::vector<std::vector<double>> dWeights(layerOutputSize, std::vector<double>(layerInputSize, 0.0));
+    for (int i=0; i<layerOutputSize;i++) {
+        for (int j=0;j<layerInputSize;j++) {
+            dWeights[i][j] = dPreActivation[i] * previousLayerOutput[j];
+        }
+    }
+    dBias = std::move(dPreActivation);
+    for (int i=0; i<accumulatedDWeights.size();i++) {
+        accumulatedDWeights[i] = vecAdd(accumulatedDWeights[i], dWeights[i]);
+    }
+    accumulatedDBias = vecAdd(accumulatedDBias, dBias);
+    numProcessedSamples++;
+    std::vector<double> dPreviousLayerOutput(layerInputSize, 0.0);
+    for (int j=0; j<layerInputSize; j++) {
+        std::vector<double> wCol = getMatrixColumn(weights, j);
+        dPreviousLayerOutput[j] = dotProduct(wCol, dPreActivation);
+    }
+}
+
+void Layer::updateParameters(const std::vector<std::vector<double>>& dWeights, const std::vector<double>& dBias, double learningRate) {
+    for (int i=0; i<weights.size(); i++) {
+        weights[i] = vecAdd(weights[i], vecScalarMul(dWeights[i], -learningRate));
+    }
+    bias = vecAdd(bias, vecScalarMul(dBias, -learningRate));
+}
+
+void Layer::commitToWeights(double learningRate) {
+    for (int i=0; i<weights.size(); i++) {
+        dWeights[i] = vecScalarMul(dWeights[i], 1/numProcessedSamples);
+    }
+    dBias = vecScalarMul(dBias, 1/numProcessedSamples);
+    updateParameters(dWeights, dBias, learningRate);
+
+    for (int i=0; i<layerOutputSize; i++) {
+        for (int j=0; j<layerInputSize; j++) {
+            accumulatedDWeights[i][j] = 0.0;
+        }
+        accumulatedDBias[i] = 0.0;
+    }
+    numProcessedSamples=0;
+}
 
 uint64_t Layer::getId() const {
     return id;
