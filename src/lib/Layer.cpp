@@ -47,8 +47,8 @@ void Layer::setParameters(std::vector<std::vector<double>> weights, std::vector<
 }
 
 void Layer::forwardPropagation(const std::vector<double>& previousLayerOutput) {
-    std::vector<double> preActivationOutput(layerOutputSize, 0.0);
-    std::vector<double> activationOutput(layerOutputSize, 0.0);
+    this->preActivationOutput = std::vector<double>(layerOutputSize, 0.0);
+    this->activationOutput = std::vector<double>(layerOutputSize, 0.0);
     const std::vector<std::vector<double>>& weights = getWeights();
     const std::vector<double>& bias = getBias();
     for (int i=0; i<layerOutputSize;i++) {
@@ -62,19 +62,19 @@ void Layer::backwardPropagation(const std::vector<double>& dActivationOutput, co
     for (int i=0; i<layerOutputSize;i++) {
         dPreActivation[i] = dActivationOutput[i] * activationFunction->activationBackwards(preActivationOutput[i]);
     }
-    std::vector<std::vector<double>> dWeights(layerOutputSize, std::vector<double>(layerInputSize, 0.0));
+    dWeights = std::vector<std::vector<double>>(layerOutputSize, std::vector<double>(layerInputSize, 0.0));
     for (int i=0; i<layerOutputSize;i++) {
         for (int j=0;j<layerInputSize;j++) {
             dWeights[i][j] = dPreActivation[i] * previousLayerOutput[j];
         }
     }
-    dBias = std::move(dPreActivation);
+    this->dBias = dPreActivation;
     for (int i=0; i<accumulatedDWeights.size();i++) {
         accumulatedDWeights[i] = vecAdd(accumulatedDWeights[i], dWeights[i]);
     }
     accumulatedDBias = vecAdd(accumulatedDBias, dBias);
     numProcessedSamples++;
-    std::vector<double> dPreviousLayerOutput(layerInputSize, 0.0);
+    this->dPreviousLayerOutput = std::vector<double>(layerInputSize, 0.0);
     for (int j=0; j<layerInputSize; j++) {
         std::vector<double> wCol = getMatrixColumn(weights, j);
         dPreviousLayerOutput[j] = dotProduct(wCol, dPreActivation);

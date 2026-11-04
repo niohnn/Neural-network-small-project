@@ -7,16 +7,16 @@ namespace dnn {
 
 Network::Network(std::vector<std::tuple<std::vector<std::vector<double>>, std::vector<double>, ActivationFunction*>> layerParameters, LossFunction*  lossFunction) 
 : ownedLossFunction(lossFunction) {
-    std::vector<Layer*> layers(layerParameters.size());
+    this->layers = std::vector<Layer*>(layerParameters.size());
     for (int i=0; i<layerParameters.size(); i++) {
         std::vector<std::vector<double>> weights = std::get<0>(layerParameters[i]);
         std::vector<double> bias = std::get<1>(layerParameters[i]);
         ActivationFunction* actFn = std::get<2>(layerParameters[i]);
         // use seed 0. parameters are overwritten in the next line
         // since the input layer of a network is not a Layer instance and "input as activation for layer 0", the layer id starts at 1
-        Layer layer((uint64_t)(i+1), 0, weights.size()>0 ? weights[0].size() : 0, weights.size(), actFn);
-        layer.setParameters(weights, bias);
-        layers[i] = &layer;
+        Layer* layer = new Layer((uint64_t)(i+1), 0, weights.size()>0 ? weights[0].size() : 0, weights.size(), actFn);
+        layer->setParameters(weights, bias);
+        layers[i] = layer;
     }
 }
 
@@ -28,9 +28,9 @@ Network::~Network() {
 }
 
 Network& Network::addLayer(uint64_t inputDim, uint64_t outputDim, ActivationFunction* activationFunction) {
-    Layer layer(layers.size()+1, nextSeed, inputDim, outputDim, activationFunction);
+    Layer* layer = new Layer(layers.size()+1, nextSeed, inputDim, outputDim, activationFunction);
     nextSeed++;
-    layers.push_back(&layer);
+    layers.push_back(layer);
     return *this;
 }
 
