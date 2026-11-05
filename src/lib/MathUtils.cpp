@@ -4,7 +4,9 @@
 #include <string>
 
 namespace dnn {
-    double dotProduct(const std::vector<double>& a, const std::vector<double>& b){
+
+
+double dotProduct(const std::vector<double>& a, const std::vector<double>& b){
     double result = 0.0 ;
     for (std::size_t i = 0; i < a.size(); i++)
     {
@@ -13,6 +15,7 @@ namespace dnn {
     return result;
     
 }
+
 double sum(const std::vector<double>& values){
     double result = 0.0;
     for(double value: values){

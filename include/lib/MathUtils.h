@@ -35,6 +35,8 @@ std::vector<double>normalize(const std::vector<T>& values,int maxValue){
     } //same idea as the for loop previously 
     return result ;
 }
+
+
                              
 
 }

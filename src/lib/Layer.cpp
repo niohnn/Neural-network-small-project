@@ -56,6 +56,82 @@ void Layer::forwardPropagation(const std::vector<double>& previousLayerOutput){
         activationOutput[i]=activationFunction->activation(preActivationOutput[i]);
     }
 }
+void Layer::backwardPropagation(
+    const std::vector<double>& dActivationOutput,
+    const std::vector<double>& previousLayerOutput) {
+
+       
+
+    std::vector<double> dPreActivation(layerOutputSize, 0.0);
+
+    for (std::size_t i = 0; i < layerOutputSize; i++) {
+        dPreActivation[i] = dActivationOutput[i] *
+            activationFunction->activationBackwards(preActivationOutput[i]);
+    }
+
+    dWeights.assign(layerOutputSize,std::vector<double>(layerInputSize, 0.0));
+
+    for (std::size_t i = 0; i < layerOutputSize; i++) {
+        for (std::size_t j = 0; j < layerInputSize; j++) {
+            dWeights[i][j] = dPreActivation[i] * previousLayerOutput[j];
+        }
+    }
+
+    dBias = dPreActivation;
+
+    for (std::size_t i = 0; i < layerOutputSize; i++) {
+        for (std::size_t j = 0; j < layerInputSize; j++) {
+            accumulatedDWeights[i][j] += dWeights[i][j];
+        }
+        accumulatedDBias[i] += dBias[i];
+    }
+
+    numProcessedSamples++;
+
+    dPreviousLayerOutput.assign(layerInputSize, 0.0);
+    std::vector<double> weightsColumn(layerOutputSize, 0.0);
+
+    for (std::size_t j = 0; j < layerInputSize; j++) {
+        for (std::size_t i = 0; i < layerOutputSize; i++) {
+            weightsColumn[i] = weights[i][j];
+        }
+
+        dPreviousLayerOutput[j] = dotProduct(weightsColumn, dPreActivation);
+    }
+}
+void Layer::updateParameters(
+    const std::vector<std::vector<double>>& dWeights,
+    const std::vector<double>& dBias,
+    double learningRate
+){
+    for(std::size_t i=0; i<layerOutputSize;i++){
+        for(std::size_t j=0; j<layerInputSize;j++){
+            weights[i][j]-=learningRate*dWeights[i][j];
+        }
+        bias[i]-=learningRate*dBias[i];
+    }
+}
+void Layer::commitToWeights(double learningRate){
+    if(numProcessedSamples==0){
+        return;
+    }
+    for(std::size_t i=0;i<layerOutputSize;i++){
+        for(std::size_t j=0;j<layerInputSize;j++){
+            accumulatedDWeights[i][j] /=numProcessedSamples;
+        }
+        accumulatedDBias[i]/=numProcessedSamples;
+    }
+    updateParameters(accumulatedDWeights,accumulatedDBias,learningRate);
+    for(std::size_t i=0;i<layerOutputSize;i++){
+        for(std::size_t j=0; j<layerInputSize;j++){
+            accumulatedDWeights[i][j]=0.0;
+        }
+        accumulatedDBias[i]=0.0;
+    }
+    numProcessedSamples=0.0;
+
+}
+
 uint64_t Layer::getId() const {
     return id;
 }
