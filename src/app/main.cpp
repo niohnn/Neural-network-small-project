@@ -68,7 +68,7 @@ int main() {
         const std::size_t batchSize = 32;
 
         std::cout << "Training on " << inputs.size() << " samples in batches of up to " << batchSize << "...\n";
-
+           std::cout << "About to enter trainBatch." << std::endl;
         network.trainBatch(inputs, outputs, batchSize, epochs, learningRate);
 
         for (std::size_t epoch = 0; epoch < network.getCostHistory().size(); ++epoch) {

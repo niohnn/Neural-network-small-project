@@ -128,7 +128,7 @@ void Layer::commitToWeights(double learningRate){
         }
         accumulatedDBias[i]=0.0;
     }
-    numProcessedSamples=0.0;
+    numProcessedSamples=0;
 
 }
 

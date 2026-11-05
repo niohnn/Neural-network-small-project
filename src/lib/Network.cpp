@@ -51,6 +51,9 @@ Network& Network::addLayer(
         outputDim,
         activationFunction
     );
+    //init layer in network otherwise layercount remains undefined 
+
+    layer->init();
 
     nextSeed++;
     layers.push_back(layer);
@@ -88,7 +91,7 @@ const std::vector<double>& actualOutput){
     for (int i =static_cast<int>(layers.size())-1; i >=0; i--)
     {
     const std::vector<double>& previousLayerOutput=
-    (i==0)? initialInput : layers[i-1]-> getPreActivationOutput();
+    (i==0)? initialInput : layers[i-1]-> getActivationOutput();
     layers[i]->backwardPropagation(dACurr,previousLayerOutput);
     dACurr=layers[i]-> getDPreviousLayerOutput();
     }
@@ -98,12 +101,13 @@ const std::vector<double>& actualOutput){
 }
 
 void Network ::trainBatch(
+    
     const std::vector<std::vector<double>>& inputs,
     const std::vector<std::vector<double>>& actualOutputs,
     std::size_t batchSize,
     int epochs,
     double learningRate
-){
+){ std::cout << "Entered trainBatch." << std::endl;
     if(ownedLossFunction ==nullptr){
         throw std::logic_error("no loss function has been set yet");
     }
@@ -120,7 +124,11 @@ void Network ::trainBatch(
     if(layers.empty()){
         throw std::invalid_argument("network needs at least 1 layer");
     }
+    std::cout << "Number of layers: " << layers.size() << std::endl;
+    std::cout << "First layer weights rows: "
+          << layers.front()->getWeights().size() << std::endl;
     std::size_t eInputSize = layers.front()->getWeights().front().size();
+    std::cout << "Expected input size: " << eInputSize << std::endl;
     std::size_t eOutputSize = layers.back()->getBias().size();
     for(std::size_t i = 0; i<inputs.size();i++){
         if(inputs[i].size()!=eInputSize){
@@ -132,14 +140,22 @@ void Network ::trainBatch(
     }
     costHistory.clear();
     accuracyHistory.clear();
+
     for(int epoch=0; epoch<epochs; epoch++){
         double epochCost=0.0;
         double epochAccuracy= 0.0;
+        std::cout << "Starting epoch " << epoch << std::endl;
         for(std::size_t i =0; i < inputs.size();i++){
             fullForwardPropagation(inputs[i]);
             epochCost+=ownedLossFunction->getCostValue(output,actualOutputs[i]);
             epochAccuracy+=ownedLossFunction->getAccuracyValue(output,actualOutputs[i]);
+            if (i == 0 && epoch == 0) {
+              std::cout << "First forward pass completed." << std::endl;
+            
             fullBackwardPropagation(output,actualOutputs[i]);
+             } if (i == 0 && epoch == 0) {
+              std::cout << "First backward pass completed." << std::endl;
+                 }
             if((i+1)%batchSize==0){
                 for(Layer*layer:layers){
                     layer->commitToWeights(learningRate);
