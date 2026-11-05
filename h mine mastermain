@@ -1,0 +1,111 @@
+[1mdiff --cc include/lib/MathUtils.h[m
+[1mindex d1ee6d1,1ad6db8..0000000[m
+[1m--- a/include/lib/MathUtils.h[m
+[1m+++ b/include/lib/MathUtils.h[m
+[36m@@@ -5,9 -5,7 +5,13 @@@[m
+  namespace dnn {[m
+  [m
+  double dotProduct(const std::vector<double>& a, const std::vector<double>& b);[m
+[32m++<<<<<<< HEAD[m
+[32m +[m
+[32m +double sum(const std::vector<double>& values);[m
+[32m +[m
+[32m++=======[m
+[32m+ double sum(const std::vector<double>& values);[m
+[32m++>>>>>>> 95e7cd00caf6f970a4c1008fea85ec43cb8f7b03[m
+  [m
+  [m
+  // Encodes value as a one-hot vector of numClasses elements: the element at index value is 1.0[m
+[1mdiff --cc src/lib/Layer.cpp[m
+[1mindex 1c5cbf0,552757d..0000000[m
+[1m--- a/src/lib/Layer.cpp[m
+[1m+++ b/src/lib/Layer.cpp[m
+[1mdiff --cc src/lib/MathUtils.cpp[m
+[1mindex e04173b,91dbb77..0000000[m
+[1m--- a/src/lib/MathUtils.cpp[m
+[1m+++ b/src/lib/MathUtils.cpp[m
+[36m@@@ -4,24 -4,26 +4,43 @@@[m
+  #include <string>[m
+  [m
+  namespace dnn {[m
+[32m +    double dotProduct(const std::vector<double>& a, const std::vector<double>& b){[m
+[32m +    double result = 0.0 ;[m
+[32m +    for (std::size_t i = 0; i < a.size(); i++)[m
+[32m +    {[m
+[32m +        result += a[i]*b[i];[m
+[32m +    }[m
+[32m +    return result;[m
+[32m +    [m
+[32m +}[m
+[32m +double sum(const std::vector<double>& values){[m
+[32m +    double result = 0.0;[m
+[32m +    for(double value: values){[m
+[32m +        [m
+[32m +       result+=value;[m
+[32m +    }[m
+[32m +    return result ;[m
+[32m +}[m
+  [m
+[32m+ double dotProduct(const std::vector<double>& a, const std::vector<double>& b){[m
+[32m+     double result = 0.0 ;[m
+[32m+     for (std::size_t i = 0; i < a.size(); i++)[m
+[32m+     {[m
+[32m+         result += a[i]*b[i];[m
+[32m+     }[m
+[32m+     return result;[m
+[32m+     [m
+[32m+ }[m
+[32m+ [m
+[32m+ double sum(const std::vector<double>& values){[m
+[32m+     double result = 0.0;[m
+[32m+     for(double value: values){[m
+[32m+         [m
+[32m+        result+=value;[m
+[32m+     }[m
+[32m+     return result ;[m
+[32m+ }[m
+[32m+ [m
+  std::vector<double> encodeAsOneHot(double value, std::size_t numClasses) {[m
+      if (value < 0.0 || value >= static_cast<double>(numClasses)) {[m
+          throw std::out_of_range("encodeAsOneHot: value " + std::to_string(value) + " is out of range for " +[m
+[36m@@@ -33,5 -35,37 +52,40 @@@[m
+      return encoded;[m
+  }[m
+  [m
+[32m++<<<<<<< HEAD[m
+[32m++=======[m
+[32m+ std::vector<double> vecAdd(const std::vector<double>& a, const std::vector<double>& b) {[m
+[32m+     if (a.size() != b.size()) {[m
+[32m+         throw std::invalid_argument("Vectors need to have same dimensions");[m
+[32m+     }[m
+[32m+     std::vector<double> c(a);[m
+[32m+     for (int i=0;i<a.size(); i++) {[m
+[32m+         c[i]+=b[i];[m
+[32m+     }[m
+[32m+     return c;[m
+[32m+ } [m
+[32m+ [m
+[32m+ std::vector<double> getMatrixColumn(const std::vector<std::vector<double>>& matrix, const size_t columnIndex) {[m
+[32m+     if (matrix.size() == 0) {[m
+[32m+         std::vector<double> emptyVec(0, 0.0);[m
+[32m+         return emptyVec;[m
+[32m+     }[m
+[32m+     size_t dim = matrix[0].size();[m
+[32m+     std::vector<double> column(dim, 0.0);[m
+[32m+     for (int i=0; i<matrix.size(); i++) {[m
+[32m+         if (matrix[i].size() != dim) throw std::invalid_argument("Inconsistent shape");[m
+[32m+         column[i] = matrix[i][columnIndex];[m
+[32m+     }[m
+[32m+     return column;[m
+[32m+ }[m
+[32m+ [m
+[32m+ std::vector<double> vecScalarMul(const std::vector<double> a, const double b) {[m
+[32m+     std::vector c(a);[m
+[32m+     for (int i=0;i<a.size();i++) {[m
+[32m+         c[i] *= b;[m
+[32m+     }[m
+[32m+     return c;[m
+[32m+ }[m
+[32m++>>>>>>> 95e7cd00caf6f970a4c1008fea85ec43cb8f7b03[m
+  [m
+  }[m
