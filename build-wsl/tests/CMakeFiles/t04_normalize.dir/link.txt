@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/t04_normalize.dir/link.d CMakeFiles/t04_normalize.dir/unit/t04_normalize.cpp.o -o t04_normalize  reference/libdnn_ref.a ../lib/libgtest_main.a /usr/lib/gcc/x86_64-linux-gnu/15/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.a ../lib/libgtest.a

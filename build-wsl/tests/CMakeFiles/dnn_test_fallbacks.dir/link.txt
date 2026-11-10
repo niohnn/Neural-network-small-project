@@ -1,0 +1,2 @@
+/usr/bin/ar qc libdnn_test_fallbacks.a CMakeFiles/dnn_test_fallbacks.dir/common/fallbacks/MathUtilsFallbacks.cpp.o CMakeFiles/dnn_test_fallbacks.dir/common/fallbacks/LayerFallbacks.cpp.o CMakeFiles/dnn_test_fallbacks.dir/common/fallbacks/NetworkFallbacks.cpp.o CMakeFiles/dnn_test_fallbacks.dir/common/fallbacks/BinaryCrossEntropyFallbacks.cpp.o
+/usr/bin/ranlib libdnn_test_fallbacks.a

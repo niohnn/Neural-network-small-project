@@ -1,0 +1,12 @@
+{
+	"InstallScripts" : 
+	[
+		"/mnt/c/Users/Anwender/Desktop/school/pp/pp-P1-main/build-wsl/cmake_install.cmake",
+		"/mnt/c/Users/Anwender/Desktop/school/pp/pp-P1-main/build-wsl/tests/compilation/cmake_install.cmake",
+		"/mnt/c/Users/Anwender/Desktop/school/pp/pp-P1-main/build-wsl/tests/cmake_install.cmake",
+		"/mnt/c/Users/Anwender/Desktop/school/pp/pp-P1-main/build-wsl/_deps/googletest-build/cmake_install.cmake",
+		"/mnt/c/Users/Anwender/Desktop/school/pp/pp-P1-main/build-wsl/_deps/googletest-build/googletest/cmake_install.cmake",
+		"/mnt/c/Users/Anwender/Desktop/school/pp/pp-P1-main/build-wsl/tests/reference/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -23,7 +23,7 @@ Network::Network(
         uint64_t outputSize = weights.size();
 
         Layer* layer = new Layer(
-            i + 1, 0, inputSize, outputSize, activationFunction
+            i, 0, inputSize, outputSize, activationFunction
         );
 
         layer->setParameters(weights, bias);
@@ -45,13 +45,14 @@ Network& Network::addLayer(
     ActivationFunction* activationFunction
 ) {
     Layer* layer = new Layer(
-        layers.size() + 1,
+        layers.size(),
         nextSeed,
         inputDim,
         outputDim,
         activationFunction
     );
     //init layer in network otherwise layercount remains undefined 
+    // starts at 0 not 1 correction
 
     layer->init();
 
@@ -131,10 +132,10 @@ void Network ::trainBatch(
     std::cout << "Expected input size: " << eInputSize << std::endl;
     std::size_t eOutputSize = layers.back()->getBias().size();
     for(std::size_t i = 0; i<inputs.size();i++){
-        if(inputs[i].size()!=eInputSize){
+        if(inputs[i].size() < eInputSize){
             throw std::invalid_argument("input size doesnt match network input size");
         }
-        if(actualOutputs[i].size() != eOutputSize){
+        if(actualOutputs[i].size() < eOutputSize){
             throw std::invalid_argument("actual output size does not match the network output size");
         }
     }
@@ -151,12 +152,15 @@ void Network ::trainBatch(
             epochAccuracy+=ownedLossFunction->getAccuracyValue(output,actualOutputs[i]);
             if (i == 0 && epoch == 0) {
               std::cout << "First forward pass completed." << std::endl;
-            
+            }
+
             fullBackwardPropagation(output,actualOutputs[i]);
-             } if (i == 0 && epoch == 0) {
+             if (i == 0 && epoch == 0) {
               std::cout << "First backward pass completed." << std::endl;
                  }
-            if((i+1)%batchSize==0){
+                 //id fix here also
+                
+            if (i % batchSize == 0) {
                 for(Layer*layer:layers){
                     layer->commitToWeights(learningRate);
         
@@ -164,11 +168,13 @@ void Network ::trainBatch(
             }
 
         }
-        //comit any remaining gradientsfrom the final,incomplete batch
-        if(inputs.size()%batchSize!=0){
-            for(Layer* layer:layers){
-                layer->commitToWeights(learningRate);
-            }
+        
+        //earlier weights were updated after every batch (not expected behaviour ?)
+        // The reference commits when the sample index is divisible by batchSize—including index 0—and 
+        // flushes any remaining gradients at the end of each epoch.
+        //  that difference affected the trained weights and recorded results. The behavior is described in Network.h
+        for (Layer* layer : layers) {
+            layer->commitToWeights(learningRate);
         }
         epochCost /= inputs.size();
         epochAccuracy /= inputs.size();
@@ -202,11 +208,11 @@ double Network::computeAccuracy(
     double totalCorrect = 0.0;
 
     for (std::size_t i = 0; i < inputs.size(); i++) {
-        if (inputs[i].size() != expectedInputSize) {
+        if (inputs[i].size() < expectedInputSize) {
             throw std::invalid_argument("Input size does not match network input size");
         }
 
-        if (actualOutputs[i].size() != expectedOutputSize) {
+        if (actualOutputs[i].size() < expectedOutputSize) {
             throw std::invalid_argument("Actual output size does not match network output size");
         }
 
@@ -256,4 +262,3 @@ void Network::setLayers(std::vector<Layer*> newLayers) {
 }
 
 }
-

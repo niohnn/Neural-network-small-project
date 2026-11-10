@@ -1,0 +1,12 @@
+# This is a generated file and its contents are an internal implementation detail.
+# The download step will be re-executed if anything in this file changes.
+# No other meaning or use of this file is supported.
+
+method=url
+command=/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/mnt/c/Users/Anwender/Desktop/school/pp/pp-P1-main/build-wsl/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/download-googletest-populate.cmake;COMMAND;/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/mnt/c/Users/Anwender/Desktop/school/pp/pp-P1-main/build-wsl/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/verify-googletest-populate.cmake;COMMAND;/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/mnt/c/Users/Anwender/Desktop/school/pp/pp-P1-main/build-wsl/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/extract-googletest-populate.cmake
+source_dir=/mnt/c/Users/Anwender/Desktop/school/pp/pp-P1-main/build-wsl/_deps/googletest-src
+work_dir=/mnt/c/Users/Anwender/Desktop/school/pp/pp-P1-main/build-wsl/_deps
+url(s)=https://github.com/google/googletest/archive/refs/tags/v1.17.0.tar.gz
+hash=SHA256=65fab701d9829d38cb77c14acdc431d2108bfdbf8979e40eb8ae567edf10b27c
+      no_extract=
+

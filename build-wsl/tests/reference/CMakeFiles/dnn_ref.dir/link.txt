@@ -1,0 +1,2 @@
+/usr/bin/ar qc libdnn_ref.a CMakeFiles/dnn_ref.dir/RefUnity.cpp.o
+/usr/bin/ranlib libdnn_ref.a

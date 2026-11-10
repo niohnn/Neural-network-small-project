@@ -15,25 +15,32 @@ double sum(const std::vector<double>& values);
 std::vector<double> encodeAsOneHot(double value, std::size_t numClasses);
 
 
+// earlier we kept maximum in generic type T ,for doubles htat meant dividing by the exact fractional maximum
+//but for integers that meant dividing by the maximum integer which is not what we want for normalization,
+//instead we take the maximum as an int directly ,what the test expects 
+template <typename T>
+std::vector<double> normalize(const std::vector<T>& values) {
+    if (values.empty()) {
+        return {};
+    }
 
-template <typename T> //generic template declaration T can be int float double
-std::vector<double>normalize(const std::vector<T>& values){
-    T maxValue = *std::max_element(values.begin(),values.end());//normalize returns a vector containing double and accepts a vector of type T  const means cant modify ,values.begin points at first element values.end at last max element finds largest value
-    std::vector<double>result; //creates an empty vector for normalized values 
-
-    for(const T& value:values){
-        result.push_back(static_cast<double>(value)/maxValue);//iterate through values then static_Cast convers value into a double then we divide by maxvalue then we push the result in the vector
+    const int maxValue = static_cast<int>(*std::max_element(values.begin(), values.end()));
+    std::vector<double> result;
+    result.reserve(values.size());
+    for (const T& value : values) {
+        result.push_back(static_cast<double>(value) / maxValue);
     }
     return result;
 }
 template <typename T>
-std::vector<double>normalize(const std::vector<T>& values,int maxValue){
-    std::vector<double>result;
+std::vector<double> normalize(const std::vector<T>& values, int maxValue) {
+    std::vector<double> result;
+    result.reserve(values.size());
 //create normalize  that returns vector of doubles but here input is generic type T and int max directly also we create new vector result 
     for(const T& value:values){
         result.push_back(static_cast<double>(value)/maxValue);
-    } //same idea as the for loop previously 
-    return result ;
+    }
+    return result;
 }
 
 

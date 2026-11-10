@@ -47,6 +47,10 @@ void Layer::setParameters(std::vector<std::vector<double>> weights, std::vector<
     this->bias = std::move(bias);
 }
 void Layer::forwardPropagation(const std::vector<double>& previousLayerOutput){
+    if (activationFunction == nullptr) {
+        throw std::logic_error("Layer has no activation function");
+    }
+
     preActivationOutput = std::vector<double>(layerOutputSize,0.0);
     activationOutput = std::vector<double>(layerOutputSize,0.0);
 
@@ -56,11 +60,14 @@ void Layer::forwardPropagation(const std::vector<double>& previousLayerOutput){
         activationOutput[i]=activationFunction->activation(preActivationOutput[i]);
     }
 }
+//test needs a logic error message now added to check for activation function existence makes sense
+
 void Layer::backwardPropagation(
     const std::vector<double>& dActivationOutput,
     const std::vector<double>& previousLayerOutput) {
-
-       
+    if (activationFunction == nullptr) {
+        throw std::logic_error("Layer has no activation function");
+    }
 
     std::vector<double> dPreActivation(layerOutputSize, 0.0);
 

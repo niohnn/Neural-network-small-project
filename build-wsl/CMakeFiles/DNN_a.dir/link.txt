@@ -1,0 +1,2 @@
+/usr/bin/ar qc libDNN.a CMakeFiles/dnn_objlib.dir/src/lib/activation/Sigmoid.cpp.o CMakeFiles/dnn_objlib.dir/src/lib/activation/ScaledSigmoid.cpp.o CMakeFiles/dnn_objlib.dir/src/lib/activation/ReLU.cpp.o CMakeFiles/dnn_objlib.dir/src/lib/activation/LeakyReLU.cpp.o CMakeFiles/dnn_objlib.dir/src/lib/loss/BinaryCrossEntropy.cpp.o CMakeFiles/dnn_objlib.dir/src/lib/Layer.cpp.o CMakeFiles/dnn_objlib.dir/src/lib/Network.cpp.o CMakeFiles/dnn_objlib.dir/src/lib/MathUtils.cpp.o CMakeFiles/dnn_objlib.dir/src/lib/IOUtils.cpp.o
+/usr/bin/ranlib libDNN.a

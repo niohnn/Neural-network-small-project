@@ -50,11 +50,10 @@ public:
     // For each epoch, runs a forward+backward pass (via fullForwardPropagation()/
     // fullBackwardPropagation()) over every sample in inputs; each layer accumulates its own
     // gradients internally (see Layer::backwardPropagation()) instead of applying them
-    // immediately, and a Layer::commitToWeights() call is made on every layer after every
-    // batchSize samples (plus once more at the end of the epoch to flush a final, possibly
-    // smaller batch), applying the gradients averaged over that batch. This reduces the
-    // per-sample gradient noise that plain single-sample SGD is prone to. costHistory/
-    // accuracyHistory store one whole-dataset-averaged value per epoch (cleared and
+    // immediately, and a Layer::commitToWeights() call is made on every layer when the sample
+    // index is divisible by batchSize (including the first sample). Any remaining gradients
+    // are flushed at the end of each epoch. Each commit applies the gradients averaged over
+    // that batch. costHistory/accuracyHistory store one whole-dataset-averaged value per epoch (cleared and
     // repopulated by each call). Uses the loss function set via setLossFunction(); throws
     // std::logic_error if none has been set, and std::invalid_argument if inputs/actualOutputs
     // mismatch in size or are empty, or if batchSize is 0.

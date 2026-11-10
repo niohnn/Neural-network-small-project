@@ -1,0 +1,111 @@
+
+---
+events:
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "CMakeLists.txt:16 (project)"
+    mode: "program"
+    variable: "CMAKE_UNAME"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "uname"
+    candidate_directories:
+      - "/home/niohnn/miniforge3/bin/"
+      - "/home/niohnn/miniforge3/condabin/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/sbin/"
+      - "/usr/bin/"
+      - "/sbin/"
+      - "/bin/"
+      - "/usr/games/"
+      - "/usr/local/games/"
+      - "/usr/lib/wsl/lib/"
+      - "/mnt/c/Program Files/WindowsApps/MicrosoftCorporationII.WindowsSubsystemForLinux_3.0.5.0_x64__8wekyb3d8bbwe/"
+      - "/mnt/c/Program Files/Eclipse Adoptium/jdk-25.0.3.9-hotspot/bin/"
+      - "/mnt/c/Windows/system32/"
+      - "/mnt/c/Windows/"
+      - "/mnt/c/Windows/System32/Wbem/"
+      - "/mnt/c/Windows/System32/WindowsPowerShell/v1.0/"
+      - "/mnt/c/Windows/System32/OpenSSH/"
+      - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR/"
+      - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common/"
+      - "/mnt/c/Program Files/dotnet/"
+      - "/mnt/c/Program Files/nodejs/"
+      - "/mnt/c/Program Files/Git/cmd/"
+      - "/mnt/c/Program Files/CMake/bin/"
+      - "/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/"
+      - "/mnt/c/Program Files/WSL/"
+      - "/mnt/c/Users/Anwender/AppData/Local/Microsoft/WindowsApps/"
+      - "/mnt/c/Users/Anwender/AppData/Local/Programs/Microsoft VS Code/bin/"
+      - "/mnt/c/Users/Anwender/AppData/Local/Python/bin/"
+      - "/mnt/c/Users/Anwender/AppData/Local/Programs/cursor/resources/app/bin/"
+      - "/mnt/c/Users/Anwender/AppData/Roaming/npm/"
+      - "/mnt/c/cygwin64/bin/"
+      - "/mnt/c/Users/Anwender/Downloads/Spin-master/Spin-master/Src/"
+      - "/mnt/c/Users/Anwender/AppData/Local/Programs/Microsoft VS Code/bin/copilot-shim/"
+      - "/mnt/c/Users/Anwender/AppData/Local/Programs/DockerDesktop/resources/bin/"
+      - "/snap/bin/"
+    searched_directories:
+      - "/home/niohnn/miniforge3/bin/uname"
+      - "/home/niohnn/miniforge3/condabin/uname"
+      - "/usr/local/sbin/uname"
+      - "/usr/local/bin/uname"
+      - "/usr/sbin/uname"
+    found: "/usr/bin/uname"
+    search_context:
+      ENV{PATH}:
+        - "/home/niohnn/miniforge3/bin"
+        - "/home/niohnn/miniforge3/condabin"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/sbin"
+        - "/usr/bin"
+        - "/sbin"
+        - "/bin"
+        - "/usr/games"
+        - "/usr/local/games"
+        - "/usr/lib/wsl/lib"
+        - "/mnt/c/Program Files/WindowsApps/MicrosoftCorporationII.WindowsSubsystemForLinux_3.0.5.0_x64__8wekyb3d8bbwe"
+        - "/mnt/c/Program Files/Eclipse Adoptium/jdk-25.0.3.9-hotspot/bin"
+        - "/mnt/c/Windows/system32"
+        - "/mnt/c/Windows"
+        - "/mnt/c/Windows/System32/Wbem"
+        - "/mnt/c/Windows/System32/WindowsPowerShell/v1.0"
+        - "/mnt/c/Windows/System32/OpenSSH"
+        - "/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR"
+        - "/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common"
+        - "/mnt/c/Program Files/dotnet"
+        - "/mnt/c/Program Files/nodejs"
+        - "/mnt/c/Program Files/Git/cmd"
+        - "/mnt/c/Program Files/CMake/bin"
+        - "/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit"
+        - "/mnt/c/Program Files/WSL"
+        - "/mnt/c/Users/Anwender/AppData/Local/Microsoft/WindowsApps"
+        - "/mnt/c/Users/Anwender/AppData/Local/Programs/Microsoft VS Code/bin"
+        - "/mnt/c/Users/Anwender/AppData/Local/Python/bin"
+        - "/mnt/c/Users/Anwender/AppData/Local/Programs/cursor/resources/app/bin"
+        - "/mnt/c/Users/Anwender/AppData/Roaming/npm"
+        - "/mnt/c/cygwin64/bin"
+        - "/mnt/c/Users/Anwender/Downloads/Spin-master/Spin-master/Src"
+        - "/mnt/c/Users/Anwender/AppData/Local/Programs/Microsoft VS Code/bin/copilot-shim"
+        - "/mnt/c/Users/Anwender/AppData/Local/Programs/DockerDesktop/resources/bin"
+        - "/snap/bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake-4.2/Modules/CMakeDetermineSystem.cmake:212 (message)"
+      - "CMakeLists.txt:16 (project)"
+    message: |
+      The system is: Linux - 6.18.58.1-microsoft-standard-WSL2 - x86_64
+...
