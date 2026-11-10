@@ -225,6 +225,13 @@ const std::vector<double>& Network::getOutput() const {
     return output;
 }
 
+const std::vector<double>& Network::getLayerInput(uint64_t layerId) const {
+    if (layerId == 0) {
+        return initialInput;
+    }
+    return layers[layerId - 1]->getActivationOutput();
+}
+
 const std::vector<double>& Network::getCostHistory() const {
     return costHistory;
 }
