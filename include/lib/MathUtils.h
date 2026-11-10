@@ -1,7 +1,8 @@
 #pragma once
 
-#include <vector>
 #include <algorithm>
+#include <vector>
+
 namespace dnn {
 
 double dotProduct(const std::vector<double>& a, const std::vector<double>& b);

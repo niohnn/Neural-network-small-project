@@ -1,8 +1,5 @@
 #include <loss/BinaryCrossEntropy.h>
-
 #include <MathUtils.h>
-
-#include <algorithm>
 #include <cmath>
 
 namespace dnn {
